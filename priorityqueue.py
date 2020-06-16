@@ -1,4 +1,4 @@
-from request import Request
+# from request import Request
 class Queue():
     # priorityList = []
     def __init__(self):
@@ -37,9 +37,9 @@ class Queue():
         l = self.__leftChild(i)
         r = self.__rightChild(i)
         min = i
-        if l < self.index and self.queue[i].remainingTime() > self.queue[l].remainingTime() :
+        if l < self.index and self.queue[i].cost() > self.queue[l].cost() :
             i = l
-        if  r < self.index and self.queue[i].remainingTime() > self.queue[r].remainingTime():
+        if  r < self.index and self.queue[i].cost() > self.queue[r].cost():
             i = r
 
         if i != min:
@@ -48,7 +48,7 @@ class Queue():
 
     def defleast(self,request):
         i = self.queue.index(request)
-        self.queue[i], self.queue[-1] = self.queue[-1],self.queue[i]
+        self.queue[i], self.queue[-1] = self.queue[-1], self.queue[i]
         self.queue.pop()
         self.index -= 1
         self.__heapify(i)
@@ -57,6 +57,8 @@ class Queue():
         return str(self.queue)
 
 
+    def match(self):
+        #find shop and user mentioned
+        #
 
-
-
+        pass
