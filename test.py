@@ -40,14 +40,14 @@ class Queue():
             i = parent
             # if self.queue[i] < self.queue[L] & self.queue[i] <self.queue[R]
             self.__insert(i)
-
         else:
             return
+
     def heapify(self,i):
         l = self.__leftChild(i)
         r = self.__rightChild(i)
         min = i
-        if l < self.index and self.queue[i] > self.queue[l] :
+        if l < self.index and self.queue[i] > self.queue[l]:
             i = l
         if  r < self.index and self.queue[i] > self.queue[r]:
             i = r 
@@ -57,7 +57,7 @@ class Queue():
             self.heapify(i)
 
 
-    def defleast(self,num):
+    def defleast(self,num): #delete a value
         i = self.queue.index(num)
         self.queue[i], self.queue[-1] = self.queue[-1],self.queue[i]
         self.queue.pop()

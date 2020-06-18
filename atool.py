@@ -1,7 +1,7 @@
-# def dis(a,b):
-#     x1,y1 = a.position[0],a.position[1]
-#     x2,y2 = b.position[0],b.position[1]
-#     return (x1-x2)**2 + (y1-y2)**2
+def dis(a,b):
+    x1,y1 = a.position[0],a.position[1]
+    x2,y2 = b.position[0],b.position[1]
+    return (x1-x2)**2 + (y1-y2)**2
 
 
 class Graph:
@@ -23,9 +23,13 @@ class Graph:
         while queue:
 
             u = queue.pop(0)
-
+            tempList = []
             for ind, val in enumerate(self.graph[u]):
                 if visited[ind] == False and val > 0:
+                    tempList.append(ind)
+
+
+
                     queue.append(ind)
                     visited[ind] = True
                     parent[ind] = u
@@ -55,19 +59,25 @@ class Graph:
                 self.graph[u][v] -= path_flow
                 self.graph[v][u] += path_flow
                 v = parent[v]
-
+        print(self.graph)
         return max_flow
 
-graph = [[0, 8, 0, 0, 3, 0],
-         [0, 0, 9, 0, 0, 0],
-         [0, 0, 0, 0, 7, 2],
-         [0, 0, 0, 0, 0, 5],
-         [0, 0, 7, 4, 0, 0],
-         [0, 0, 0, 0, 0, 0]]
+# graph = [[0, 1, 1, 0, 0, 0],
+#          [0, 0, 0, 1, 1, 0],
+#          [0, 0, 0, 1, 1, 0],
+#          [0, 0, 0, 0, 0, 1],
+#          [0, 0, 0, 0, 0, 1],
+#          [0, 0, 0, 0, 0, 0]]
+#
+# g = Graph(graph)
+#
+# source = 0
+# sink = 5
+#
+# print("Max Flow: %d " % g.ford_fulkerson(source, sink))
 
-g = Graph(graph)
-
-source = 0
-sink = 5
-
-print("Max Flow: %d " % g.ford_fulkerson(source, sink))
+def In(A,B):
+        for i in B:
+            if A == B:
+                return True
+        return False
