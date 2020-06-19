@@ -1,5 +1,5 @@
 # from request import Request
-class Queue():
+class Queue():#priorityQueue
     # priorityList = []
     def __init__(self,shop):
         self.queue = []
@@ -23,7 +23,7 @@ class Queue():
     def __rightChild(self,index):
         return 2*index+2
 
-    def __insert(self, i):  # create smallest node
+    def __insert(self, i):  # create smallest node #index = i
         if self.index <= 0:
             return
         parent = self.__parent(i)
@@ -63,6 +63,9 @@ class Queue():
         print(self.queue)
 
     def send(self):
+        #everytime send every request, every 1 hour send once
+        #when send, update all stock in the shop.
+        #refresh the priorityqueue
         pass
     #
     # def match(self):

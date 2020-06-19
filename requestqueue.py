@@ -1,6 +1,6 @@
 import atool
 import copy
-class requestQ():
+class requestQ(): #itemQueue
     def __init__(self,item):
         self.item = item
         self.requestamount = 0
@@ -14,7 +14,7 @@ class requestQ():
         self.graph = []
         self.matchedResult = []
 
-    def addR(self,request,item,amount):
+    def addR(self,request,item,amount):#addRequest
         tempUserList = []
         tempAmount = self.requestamount + amount
         tempshop = self.shopamount
@@ -24,18 +24,11 @@ class requestQ():
         userIndex = 0
         # if request.user not in self.userList:
         if not atool.In(request.user,self.userList):
-            # indx = self.userList.index(request.user)
-            # indshop = self.shopList.index(shop)
-            # self.edge +=
-            # graph[indx+1][indshop+1+self.userCount] += amount
-
             userIndex = self.userCount + 1
             tempUserList.append(request.user)
         else:
             userIndex = self.userList.index(request.user)
 
-        # if request.matchPharm == []:
-        #     raise TypeError
         for shop,dis in request.matchPharm:
             # shop = index.get("shop")
             if shop not in self.shopList:
@@ -50,8 +43,7 @@ class requestQ():
             print("rejected :"+str(request))
             print(tempAmount)
             print(tempshop)
-            # self.shopList.pop(-1)
-            pass
+
 
         else:
             self.shopList = self.shopList + tempshopList
@@ -61,11 +53,8 @@ class requestQ():
             self.userCount = self.userCount +len(tempUserList)
             # addList = [request,userIndex, shopIndexList]
             self.createEdge(request,userIndex,shopIndexList)
-            # self.edge.append([request,userIndex, shopIndexList])  # userCount mean the index of user,request give the flow
             print(str(self.item.name)+str(self.edge) + str(self.edge[0][0].medicine.get("amount")))
-            # self.addList.append([request, item, amount])
-        #build edges
-    #every 5min run once or every 50 inputs
+
     def runRankCost(self):
         graph = []
         edgeLength = len(self.shopList)+self.userCount+2
@@ -85,12 +74,8 @@ class requestQ():
         for s in range(len(self.shopList)):
             shop = self.shopList[s]
             graph[1 + self.userCount + s][edgeLength - 1] = shop.getStock()
-            # print(shop.getStock())
 
-        # print(graph)
         self.graph = copy.deepcopy(graph)
-
-
         self.FFAMatch(graph,edgeLength)
 
     def FFAMatch(self,graph,edgelength):
@@ -151,10 +136,12 @@ class requestQ():
             for i in self.edge: #check same user
                 if i[0].user == request.user:
                     if i[0].cost>=request.cost:
-                        i[0].medicine["amount"] = i[0].medicine.get("amount")+request.medicine.get("amount")
+                        pass
+                        # i[0].medicine["amount"] = i[0].medicine.get("amount")+request.medicine.get("amount")
 
                     else:
                         i[0].cost = request.cost
+                    i[0].medicine["amount"] = i[0].medicine.get("amount") + request.medicine.get("amount")
                     self.userCount = self.userCount - 1
                     return
 
@@ -172,3 +159,4 @@ class requestQ():
                     self.shopList[j-1-self.userCount].addRequest(self.edge[i-1][0],v)
 
 
+#clear all

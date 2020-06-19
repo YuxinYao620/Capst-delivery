@@ -3,8 +3,8 @@ import time
 # from gero import Gerocery
 # from pharm import Pharm
 # from user import User
-from volunteer import Volunteer
-from atool import dis
+# from volunteer import Volunteer
+# from atool import dis
 class Request():
      def __init__(self,user,item,amount):
          self.user = user
@@ -32,8 +32,8 @@ class Request():
          else:
             print("request "+ str(self) + "not avaliable in your area.")
 
-     def addRe(self,item,amount):
-         item.requestqueue.addR(self, item, amount)
+     # def addRe(self,item,amount):
+     #     item.requestqueue.addR(self, item, amount)
 
      def startDate(self):
          return self.date

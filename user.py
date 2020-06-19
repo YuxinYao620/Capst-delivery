@@ -44,10 +44,6 @@ class User():
         if self.age >= 65:
             self.healthRisk -= 5
 
-        # self.neiPh.sort()
-     #def healthRish(self):
-        # 回来写 应该用sigmoid
-
     def getDis(self,shop):
         for a in self.neiPh:
             if a == shop:
