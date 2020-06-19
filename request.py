@@ -11,7 +11,7 @@ class Request():
          self.date = time.localtime()
          # self.emergency = emergency # T or F// marks
          # self.matchInfo = self.match()
-         self.medicine = []
+         self.medicine = {}
          self.food = []
          self.cost = self.costValue()
          self.matchGero = []
@@ -21,7 +21,7 @@ class Request():
          self.addItem(item,amount)
      def addItem(self,item,amount):
          if item.isMedi():
-             self.medicine = [item,amount]
+             self.medicine = {"item":item,"amount":amount}
              self.arrangePharm()
          else:
              self.food.append([item,amount])
@@ -72,8 +72,10 @@ class Request():
 
      def arrangePharm(self):
          for i in self.nearPharm():
-             item = self.medicine[0]
-             amount = self.medicine[1]
+             # item = self.medicine[0]
+             item = self.medicine.get("item")
+             # amount = self.medicine[1]
+             # amount = self.medicine.get("amount")
              if i[0].checkStock(item):
                  self.matchPharm.append(i)
          return self.matchPharm

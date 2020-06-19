@@ -62,7 +62,7 @@ class requestQ():
             # addList = [request,userIndex, shopIndexList]
             self.createEdge(request,userIndex,shopIndexList)
             # self.edge.append([request,userIndex, shopIndexList])  # userCount mean the index of user,request give the flow
-            print(str(self.item.name)+str(self.edge) + str(self.edge[0][0].medicine[1]))
+            print(str(self.item.name)+str(self.edge) + str(self.edge[0][0].medicine.get("amount")))
             # self.addList.append([request, item, amount])
         #build edges
     #every 5min run once or every 50 inputs
@@ -76,7 +76,8 @@ class requestQ():
             graph.append(row)
 
         for i in self.edge:
-            graph[0][i[1]] = i[0].medicine[1]
+            # graph[0][i[1]] = i[0].medicine[1]
+            graph[0][i[1]] = i[0].medicine.get("amount")
             for j in i[2]:
                 # shop = self.shopList[j]
                 graph[i[1]][1+self.userCount+j] = 100+i[0].matchPharm[j][1]
@@ -150,7 +151,7 @@ class requestQ():
             for i in self.edge: #check same user
                 if i[0].user == request.user:
                     if i[0].cost>=request.cost:
-                        i[0].medicine[1] += request.medicine[1]
+                        i[0].medicine["amount"] = i[0].medicine.get("amount")+request.medicine.get("amount")
 
                     else:
                         i[0].cost = request.cost
