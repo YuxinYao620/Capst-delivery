@@ -1,5 +1,6 @@
 # from item import Item
-from volunteer import Volunteer
+# from volunteer import Volunteer
+import priorityqueue
 class Shop():
     #-30min
     def __init__(self,name,position,stock):
@@ -11,8 +12,11 @@ class Shop():
         #     raise TypeErro
         self.stock = []
         self.updateStock(stock[0],stock[1])
-        self.volunteer = []
-        # self.neighbourShop = neighbourShop
+        # self.volunteer = []
+        # self.neighbourShop
+        # = neighbourShop
+
+        self.priQ = priorityqueue.Queue(self)
 
     def updateStock(self,item,amount):
         self.stock.append([item,amount])
@@ -58,7 +62,6 @@ class Shop():
 
         return 0
 
-
     def __str__(self):
         return str(self.name)
     def cost(self,request):
@@ -69,7 +72,8 @@ class Shop():
             return self.name == other.name
         else:
             return False
-
+    def addRequest(self,request,amount):
+        self.priQ.addRequest(request,amount)
 
 
 # a = "A"

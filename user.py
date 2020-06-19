@@ -15,6 +15,7 @@ class User():
         self.neiGe = []
         self.neiPh = []
         self.nearestPharm()
+        self.request = []
 
     def __getDistance(self,shop):
         return ((self.position[0] - shop.position[0])**2 + ((self.position[1] - shop.position[1]))**2)
@@ -52,5 +53,5 @@ class User():
             if a == shop:
                 return a[1]
 
-    def sendRequest(self):
-        return Request(self)
+    def sendRequest(self,item,amount):
+        self.request.append(Request(self,item,amount))

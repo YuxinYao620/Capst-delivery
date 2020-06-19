@@ -1,13 +1,15 @@
 # from request import Request
 class Queue():
     # priorityList = []
-    def __init__(self):
+    def __init__(self,shop):
         self.queue = []
         self.index = 0
+        self.shop = shop
         # self.queue.append(request)
 
-    def addRequest(self,request):
-        self.queue.append(request)
+    def addRequest(self,request,amount):
+        # self.queue.append({"request":request,"amount":amount})
+        self.queue.append([request,amount])
         self.index += 1
         if self.index > 1:
             self.__insert(self.index-1)
@@ -25,7 +27,8 @@ class Queue():
         if self.index <= 0:
             return
         parent = self.__parent(i)
-        if self.queue[i].remainingTime() < self.queue[parent].remainingTime():
+        # a = self.queue[i][0]
+        if self.queue[i][0].totalCost(self.shop) < self.queue[parent][0].totalCost(self.shop):
             self.queue[i], self.queue[parent] = self.queue[parent], self.queue[i]
             i = parent
             self.__insert(i)
@@ -37,9 +40,9 @@ class Queue():
         l = self.__leftChild(i)
         r = self.__rightChild(i)
         min = i
-        if l < self.index and self.queue[i].cost() > self.queue[l].cost() :
+        if l < self.index and self.queue[i][0].totalCost(self.shop) > self.queue[l][0].totalCost(self.shop):
             i = l
-        if  r < self.index and self.queue[i].cost() > self.queue[r].cost():
+        if  r < self.index and self.queue[i][0].totalCost(self.shop)> self.queue[r][0].totalCost(self.shop):
             i = r
 
         if i != min:
@@ -56,9 +59,14 @@ class Queue():
     def __str__(self):
         return str(self.queue)
 
+    def show(self):
+        print(self.queue)
 
-    def match(self):
-        #find shop and user mentioned
-        #
-
+    def send(self):
         pass
+    #
+    # def match(self):
+    #     #find shop and user mentioned
+    #     #
+    #
+    #     pass

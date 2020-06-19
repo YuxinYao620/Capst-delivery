@@ -6,7 +6,7 @@ import time
 from volunteer import Volunteer
 from atool import dis
 class Request():
-     def __init__(self,user):
+     def __init__(self,user,item,amount):
          self.user = user
          self.date = time.localtime()
          # self.emergency = emergency # T or F// marks
@@ -17,7 +17,8 @@ class Request():
          self.matchGero = []
          # self.matchPharm = self.arrangePharm()
          self.matchPharm = []
-
+         # self.totalCost = self.totalCost()
+         self.addItem(item,amount)
      def addItem(self,item,amount):
          if item.isMedi():
              self.medicine = [item,amount]
@@ -26,7 +27,8 @@ class Request():
              self.food.append([item,amount])
 
          if self.matchPharm != []:
-            self.addRe(item,amount)
+            # self.addRe(item,amount)
+            item.requestqueue.addR(self, item, amount)
          else:
             print("request "+ str(self) + "not avaliable in your area.")
 
@@ -80,9 +82,14 @@ class Request():
          for i in self.matchPharm:
              if shop == i[0]:
                  return i[1]
+
+     def totalCost(self,shop):
+         return self.cost + self.getDis(shop)
      # def matchPh(self,listOfPharm):
      #     self.matchPharm.append(listOfPharm)
-
+     def __str__(self):
+         return str(self.user )+ str(self.medicine)
+     
      # def arrangeVolunteerP(self):
      #     minDis = 2
      #     for i in self.nearPharm():

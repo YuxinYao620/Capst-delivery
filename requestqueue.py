@@ -1,4 +1,5 @@
 import atool
+import copy
 class requestQ():
     def __init__(self,item):
         self.item = item
@@ -73,16 +74,7 @@ class requestQ():
             for j in range(edgeLength):
                 row.append(0)
             graph.append(row)
-        # print(graph)
-        #write edges i
-        # nto graph
-        # for index,value in enumerate(self.edge):
-        #     # graph[0][value[1]] = value[0].medicine[1]
-        #
-        #     for j in value[2]:
-        #         graph[index+1][1+self.userCount+j] = 100
-        #         graph[self.userCount+j+1][edgeLength-1] = {"flow":self.shopList[j].getStock(),"distance":value[0].getDis(self.shopList[j])}#get the shop distance user
-        #
+
         for i in self.edge:
             graph[0][i[1]] = i[0].medicine[1]
             for j in i[2]:
@@ -94,7 +86,9 @@ class requestQ():
             graph[1 + self.userCount + s][edgeLength - 1] = shop.getStock()
             # print(shop.getStock())
 
-        print(graph)
+        # print(graph)
+        self.graph = copy.deepcopy(graph)
+
 
         self.FFAMatch(graph,edgeLength)
 
@@ -123,7 +117,10 @@ class requestQ():
                 graph[v][u] = graph[v][u] + path_flow
                 v = parent[v]
         print(graph)
-        return max_flow
+
+        self.matchedResult = graph
+
+        self.match(edgelength)
 
     def BFS(self,s,t,parent,edgeLength,graph):
         visited = [False] * (edgeLength)
@@ -143,41 +140,8 @@ class requestQ():
                     queue.append(ind)
                     visited[ind] = True
                     parent[ind] = u
-            #
-            #     for ind, val in sorted(enumerate(graph[u]),key = lambda x: self.userList[ind].getDis(self.shopList[shop]) if ind<self.userCount+1 and ind>0 else ):
-            #         if visited[ind] == False and val > 0:#index 链接之后的点
-            #             queue.append(ind)
-            #             visited[ind] = True
-            #             parent[ind] = u
-            # else:
-            #     for ind, val in enumerate(graph[u]):
-            #         if visited[ind] == False and val > 0:#index 链接之后的点
-            #             queue.append(ind)
-            #             visited[ind] = True
-            #             parent[ind] = u
-
-            # tempList = []
-            # for ind,val in enumerate(graph[u]):
-            #     tempList.append([ind,val])
-
-
-
 
         return True if visited[t] else False
-
-
-
-
-    # if ind > self.userCount and ind < (edgeLength - 1):
-
-    # def compare(self,list):
-    #     tempList = []
-    #     for i in list:
-    #         if len(i)>1:
-    #             tempList.append(i)
-    #     sorted(tempList,key = lambda x: x[1][1])
-    #     for i in
-    #
 
     def createEdge(self,request,userIndex, shopIndexList):  #[request,userIndex, shopIndexList]  = list
         if self.edge == []:
@@ -195,5 +159,15 @@ class requestQ():
 
             self.edge.append([request,userIndex,shopIndexList])
             return
+
+    def match(self,edgeLength):
+        for i in range (1,self.userCount+1):
+            for j in range(1,edgeLength-1):
+                v = self.graph[i][j] - self.matchedResult[i][j]
+                if v>0 :
+                    print(self.shopList[j-self.userCount-1])
+                        # addRequest(
+                    print(self.edge[i-1][0],v)
+                    self.shopList[j-1-self.userCount].addRequest(self.edge[i-1][0],v)
 
 
