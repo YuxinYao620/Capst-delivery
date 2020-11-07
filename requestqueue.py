@@ -5,8 +5,6 @@ class requestQ(): #itemQueue
         self.item = item
         self.requestamount = 0
         self.shopamount = 0
-        # self.waitList = [] #?? wait to be sent?
-        # self.addList = []
         self.shopList = []
         self.userCount = 0
         self.userList = []
@@ -41,9 +39,8 @@ class requestQ(): #itemQueue
 
         if tempAmount > tempshop:
             print("rejected :"+str(request))
-            print(tempAmount)
-            print(tempshop)
-
+            # print(tempAmount)
+            # print(tempshop)
 
         else:
             self.shopList = self.shopList + tempshopList
@@ -53,9 +50,9 @@ class requestQ(): #itemQueue
             self.userCount = self.userCount +len(tempUserList)
             # addList = [request,userIndex, shopIndexList]
             self.createEdge(request,userIndex,shopIndexList)
-            print(str(self.item.name)+str(self.edge) + str(self.edge[0][0].medicine.get("amount")))
+            # print(str(self.item.name)+str(self.edge) + str(self.edge[0][0].medicine.get("amount")))
 
-    def runRankCost(self):
+    def runRankCost(self):#run match
         graph = []
         edgeLength = len(self.shopList)+self.userCount+2
         for i in range(edgeLength):
@@ -65,15 +62,13 @@ class requestQ(): #itemQueue
             graph.append(row)
 
         for i in self.edge:
-            # graph[0][i[1]] = i[0].medicine[1]
             graph[0][i[1]] = i[0].medicine.get("amount")
             for j in i[2]:
-                # shop = self.shopList[j]
                 graph[i[1]][1+self.userCount+j] = 100+i[0].matchPharm[j][1]
 
         for s in range(len(self.shopList)):
             shop = self.shopList[s]
-            graph[1 + self.userCount + s][edgeLength - 1] = shop.getStock()
+            graph[1 + self.userCount + s][edgeLength - 1] = shop.checkStock(self.item)
 
         self.graph = copy.deepcopy(graph)
         self.FFAMatch(graph,edgeLength)
@@ -91,10 +86,8 @@ class requestQ(): #itemQueue
             while (s != source):
                 path_flow = min(path_flow, graph[parent[s]][s])
                 s = parent[s]
-
             # Adding the path flows
             max_flow += path_flow
-
             # Updating the residual values of edges
             v = sink
             while (v != source):
@@ -102,31 +95,22 @@ class requestQ(): #itemQueue
                 graph[u][v] = graph[u][v] - path_flow
                 graph[v][u] = graph[v][u] + path_flow
                 v = parent[v]
-        print(graph)
-
+        # print(graph)
         self.matchedResult = graph
-
         self.match(edgelength)
 
     def BFS(self,s,t,parent,edgeLength,graph):
         visited = [False] * (edgeLength)
         queue = []
-
         queue.append(s)
         visited[s] = True
-
         while queue:
-
             u = queue.pop(0)
-            # if u>0 and u < self.userCount+1:
             for ind, val in list(sorted(enumerate(graph[u]),key = lambda x:x[1])):
-                # if len(val) == 2:
-                #     val = val[1]
                 if visited[ind] == False and val > 0:#index 链接之后的点
                     queue.append(ind)
                     visited[ind] = True
                     parent[ind] = u
-
         return True if visited[t] else False
 
     def createEdge(self,request,userIndex, shopIndexList):  #[request,userIndex, shopIndexList]  = list
@@ -137,14 +121,11 @@ class requestQ(): #itemQueue
                 if i[0].user == request.user:
                     if i[0].cost>=request.cost:
                         pass
-                        # i[0].medicine["amount"] = i[0].medicine.get("amount")+request.medicine.get("amount")
-
                     else:
                         i[0].cost = request.cost
                     i[0].medicine["amount"] = i[0].medicine.get("amount") + request.medicine.get("amount")
                     self.userCount = self.userCount - 1
                     return
-
             self.edge.append([request,userIndex,shopIndexList])
             return
 
@@ -153,9 +134,9 @@ class requestQ(): #itemQueue
             for j in range(1,edgeLength-1):
                 v = self.graph[i][j] - self.matchedResult[i][j]
                 if v>0 :
-                    print(self.shopList[j-self.userCount-1])
+                    # print(self.shopList[j-self.userCount-1])
                         # addRequest(
-                    print(self.edge[i-1][0],v)
+                    # print(self.edge[i-1][0],v)
                     self.shopList[j-1-self.userCount].addRequest(self.edge[i-1][0],v)
 
 

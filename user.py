@@ -51,3 +51,12 @@ class User():
 
     def sendRequest(self,item,amount):
         self.request.append(Request(self,item,amount))
+
+    def __repr__(self):
+        return str(self.name)
+     # def calculateRisk(self):
+     #    for i in self.disease:
+     #        if self.disease in riskDisease:
+     #        self.healthRisk -= riskDisease[i]
+     #    if self.age >= 65:
+     #        self.healthRisk -= 5

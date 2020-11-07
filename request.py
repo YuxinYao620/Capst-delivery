@@ -62,20 +62,9 @@ class Request():
              if i.checkStock(self.food): #check multiple shop for single request and update each time 优先一个商店
                 self.matchGero.append(i)
 
-     # def arrangePharm(self):
-     #     for i in self.nearPharm():
-     #         item = self.medicine[0]
-     #         amount = self.medicine[1]
-     #         if i[0].checkStock(item):
-     #             self.matchPharm.append({"shop":i[0],"dis":i[1]})
-     #     return self.matchPharm
-
      def arrangePharm(self):
          for i in self.nearPharm():
-             # item = self.medicine[0]
              item = self.medicine.get("item")
-             # amount = self.medicine[1]
-             # amount = self.medicine.get("amount")
              if i[0].checkStock(item):
                  self.matchPharm.append(i)
          return self.matchPharm
@@ -89,8 +78,10 @@ class Request():
          return self.cost + self.getDis(shop)
      # def matchPh(self,listOfPharm):
      #     self.matchPharm.append(listOfPharm)
-     def __str__(self):
+     def __repr__(self):
          return str(self.user )+ str(self.medicine)
+     # def __str__(self):
+     #     return str(self.user) + 'asking for' + str(self.medicine)
      
      # def arrangeVolunteerP(self):
      #     minDis = 2

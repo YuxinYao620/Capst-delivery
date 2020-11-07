@@ -22,8 +22,8 @@ class Shop():
         self.stock.append([item,amount])
         return self.stock
 
-    def getStock(self):
-        return self.stock[0][1]
+    ## def getStock(self):
+    ##     return self.stock[0][1]
     # @property
     # def neighbourShop(self):
     #     return self.neighbourShop
@@ -64,8 +64,7 @@ class Shop():
 
     def __str__(self):
         return str(self.name)
-    def cost(self,request):
-        pass                 #之后记得写 return cost value
+
 
     def __eq__(self, other):
         if isinstance(other,Shop):

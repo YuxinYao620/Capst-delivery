@@ -59,8 +59,17 @@ class Queue():#priorityQueue
     def __str__(self):
         return str(self.queue)
 
+    def showqueue(self):
+        for i in self.queue:
+            print(str(self.shop)+ ' : ' + str(i[0].user) +" requested "+ str(i[0].medicine) +' address: '+str(i[0].user.address)+ ' at position: '+str(i[0].user.position) )
+
+
     def show(self):
-        print(self.queue)
+        # print(self.queue)
+        self.showqueue()
+
+
+        # print(self.shop +' : '+ str())
 
     def send(self):
         #everytime send every request, every 1 hour send once
