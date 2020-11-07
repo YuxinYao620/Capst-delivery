@@ -25,3 +25,5 @@ delivered to users.
    and distance of the users.
    
 ###### Example:
+   An example is shown in the main.py, where 2 shops, 3 users and 2 items are initialized.
+   The result of the matching and the order of delivering is shown for different shops.
